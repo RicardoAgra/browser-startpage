@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>YKO StartPage</title>
+		<link rel="stylesheet" href="dist.css" />
+	</head>
+
+	<script>
+		/* User Data */
+		const weekDays = [
+			"Sunday",
+			"Monday",
+			"Tuesday",
+			"Wednesday",
+			"Thursday",
+			"Friday",
+			"Saturday"
+		];
+
+		const wallpapers = [
+			"0.png",
+			"1.png",
+			"2.png",
+			"3.png",
+			"4.png",
+			"5.png",
+			"6.png"
+		];
+
+		const flexLinks = [
+			{
+				name: "Quick Links",
+				links: [
+					{
+						label: "Finviz",
+						logo: "finviz.png",
+						url: "https://finviz.com/map.ashx?t=sec"
+					},
+					{
+						label: "Yahoo Finance",
+						logo: "yahoo.png",
+						url: "https://finance.yahoo.com/"
+					},
+					{
+						label: "Investing",
+						logo: "investing-logo.png",
+						url: "https://www.investing.com/"
+					},
+					{
+						label: "Twitter",
+						logo: "twitter.png",
+						url: "https://twitter.com/home"
+					}
+				]
+			},
+			{
+				name: "Charts",
+				links: [
+					{
+						label: "Bitcoin",
+						logo: "bitcoin.png",
+						url: "https://finance.yahoo.com/chart/BTC-USD"
+					},
+					{
+						label: "S&P500",
+						logo: "chart.png",
+						url: "https://finance.yahoo.com/chart/%5EGSPC"
+					},
+					{
+						label: "Copper",
+						logo: "copper-t.png",
+						url: "https://finance.yahoo.com/chart/HG=F"
+					}
+				]
+			}
+		];
+
+		const gridLinks = [
+			{
+				name: "Data Sources",
+				links: [
+					{
+						label: "Atlanta FED",
+						logo: "atlanta-fed.png",
+						homepage: "https://www.atlantafed.org/",
+						indicators: [
+							{
+								indicator: "Market implied federal funds futures",
+								url: "https://www.atlantafed.org/cenfis/market-probability-tracker"
+							}
+						]
+					},
+					{
+						label: "Chicago FED",
+						logo: "chicago-fed.png",
+						homepage: "https://www.chicagofed.org/",
+						indicators: [
+							{
+								indicator: "National Financial Conditions Index (NFCI)",
+								url: "https://www.chicagofed.org/publications/nfci/index"
+							}
+						]
+					},
+					{
+						label: "ISM (Institute for Supply Management)",
+						logo: "ism.png",
+						homepage: "https://www.ismworld.org/",
+						indicators: []
+					},
+					{
+						label: "FRED",
+						logo: "fred.png",
+						homepage: "https://fred.stlouisfed.org/",
+						indicators: []
+					},
+					{
+						label: "Treasury Fiscal Data",
+						logo: "treasury-fiscal-data.png",
+						homepage: "https://fiscaldata.treasury.gov/",
+						indicators: [
+							{
+								indicator: "National Deficit",
+								url: "https://fiscaldata.treasury.gov/americas-finance-guide/national-deficit/"
+							}
+						]
+					},
+					{
+						label: "U.S. Census Bureau",
+						logo: "usa-census-bureau.png",
+						homepage: "https://www.census.gov/",
+						indicators: [
+							{
+								indicator: "Construction Spending",
+								url: "https://www.census.gov/construction/c30/data/index.html"
+							}
+						]
+					}
+				]
+			},
+			{
+				name: "Energy Data",
+				links: [
+					{
+						label: "U.S. Department of Energy",
+						logo: "dep-energy.png",
+						homepage: "https://www.energy.gov/",
+						indicators: [
+							{
+								indicator: "Nuclear Power Reliability",
+								url: "https://www.energy.gov/ne/articles/nuclear-power-most-reliable-energy-source-and-its-not-even-close"
+							}
+						]
+					},
+					{
+						label: "World Energy Data",
+						logo: "world-energy-data.png",
+						homepage: "https://www.worldenergydata.org/",
+						indicators: [
+							{
+								indicator: "World Final Energy",
+								url: "https://www.worldenergydata.org/world-final-energy/"
+							}
+						]
+					}
+				]
+			},
+			{
+				name: "Blogs",
+				links: [
+					{
+						label: "The Balance",
+						logo: "the-balance.png",
+						homepage: "https://www.thebalancemoney.com/",
+						indicators: [
+							{
+								indicator: "U.S Real GDP Growth Rate by Year",
+								url: "https://www.thebalancemoney.com/u-s-gdp-growth-3306008"
+							}
+						]
+					}
+				]
+			},
+			{
+				name: "Blogs",
+				links: [
+					{
+						label: "The Balance",
+						logo: "the-balance.png",
+						homepage: "https://www.thebalancemoney.com/",
+						indicators: [
+							{
+								indicator: "U.S Real GDP Growth Rate by Year",
+								url: "https://www.thebalancemoney.com/u-s-gdp-growth-3306008"
+							}
+						]
+					}
+				]
+			}
+		];
+	</script>
+
+	<body
+		style="background: black"
+		class="scroller relative flex p-24 gap-16 min-h-screen flex-col text-gray-50"
+	>
+		<figure class="fixed inset-0">
+			<img
+				id="background"
+				class="w-full h-full object-cover object-center opacity-0 transition-all"
+			/>
+		</figure>
+
+		<div id="overlay" class="absolute inset-0 bg-black bg-opacity-80"></div>
+
+		<h2
+			id="weekday"
+			class="fixed right-24 top-8 font-bold text-6xl text-orange-500 text-opacity-30"
+		></h2>
+
+		<div class="z-10 fixed right-24 top-36">
+			<button
+				id="open-notebook"
+				class="button group"
+				onclick="toggleNotebook(event)"
+			>
+				<img
+					class="h-12 w-12 opacity-90 border-4 border-transparent pointer-events-none bg-gray-50 rounded-full overflow-hidden transition-all group-hover:bg-blue-200"
+					src="./icons/notebook.png"
+				/>
+				<p
+					class="transition-all pointer-events-none text-white text-inherit font-bold text-sm pt-1 group-hover:text-blue-400"
+				>
+					Notes
+				</p>
+			</button>
+		</div>
+
+		<textarea
+			id="notebook"
+			class="notebook fixed right-48 border-2 text-lg border-green-900 bottom-24 top-60 rounded translate-x-[300px] w-[400px] bg-white bg-opacity-95 transition-all opacity-0 duration-300 ease-out text-gray-800 p-4 shadow-inner"
+			placeholder="What's on your mind?"
+		></textarea>
+
+		<script>
+			/* Day-of-the-week (Name, Wallpaper) */
+			const weekDay = new Date().getDay();
+
+			const updateWeekDayUI = weekday => {
+				console.log("ui update");
+
+				document.getElementById("weekday").innerText = weekDays[weekDay];
+				document.getElementById(
+					"background"
+				).src = `./wallpapers/${wallpapers[weekDay]}`;
+				document.getElementById("background").classList.remove("opacity-0");
+			};
+
+			updateWeekDayUI();
+
+			window.onfocus = updateWeekDayUI;
+			document.onload = updateWeekDayUI;
+
+			/* Notebook */
+			const notebook = document.getElementById("notebook");
+
+			notebook.value = localStorage.getItem("notebook");
+
+			notebook.addEventListener("keyup", event => {
+				localStorage.setItem("notebook", event.target.value);
+			});
+
+			const toggleNotebook = event => {
+				event.stopPropagation();
+
+				if (event.target.classList.contains("on")) {
+					document.getElementById("notebook").classList.remove("open");
+					return event.target.classList.remove("on");
+				}
+
+				document.getElementById("notebook").classList.add("open");
+				event.target.classList.add("on");
+			};
+
+			document.body.addEventListener("click", event => {
+				if (event.target.id === "notebook") return;
+
+				document.getElementById("notebook").classList.remove("open");
+				document.getElementById("open-notebook").classList.remove("on");
+			});
+
+			/* Render Functions */
+			const createFlexElement = ({ label, logo, url }) => `<a
+				href="${url}"
+				rel="noopener noreferrer"
+			>
+				<div
+					class="pt-3 pb-2 px-3 rounded flex flex-col items-center transition-all hover:shadow hover:bg-green-600 hover:bg-opacity-50 group"
+				>
+					<figure
+						class="rounded w-14 h-14 bg-gray-100 bg-transparent transition-all duration-300 relative flex items-center justify-center rounded overflow-hidden"
+					>
+						<img
+							class="w-full h-full object-cover"
+							src="./logos/${logo}"
+						/>
+					</figure>
+					<p
+						class="pt-2 text-center font-bold text-sm text-center max-w-14 white-space-wrap"
+					>
+						${label}
+					</p>
+				</div>
+			</a>`;
+
+			const flexSection = document.createElement("SECTION");
+
+			flexSection.innerHTML = `<section class="flex flex-wrap gap-12">
+				${flexLinks
+					.map(
+						({ name, links }) => `
+					<div>
+					<h1 class="section-title">${name}</h1>
+					<navbar class="flex gap-4">
+						${links.map(flexElement => createFlexElement(flexElement)).join("")}
+					</navbar>
+				</div>`
+					)
+					.join("")}
+			</section>`;
+
+			const createGridElement = ({
+				label,
+				logo,
+				homepage,
+				indicators
+			}) => `<div class="group relative inline-flex items-center max-w-[400px] hover:shadow-[0_1px_2px_rgba(22,101,52,0.25)] hover:bg-green-600 hover:bg-opacity-50 p-2 w-full rounded">
+					<figure class="pr-4">
+						<img class="h-14 w-14 rounded" src="./logos/${logo}" />
+					</figure>
+
+					<div class="block">
+						<a class="absolute inset-0" href="${homepage}" rel="noopener noreferrer"></a>
+
+						<h2
+							class="font-bold pb-1 group-hover:text-green-50 transition-color"
+						>
+							${label}
+						</h2>
+
+						${indicators.map(
+							({ indicator, url }) => `<a
+							class="relative text-blue-100 hover:text-blue-200 hover:underline transition-all"
+							href="${url}"
+							rel="noopener noreferrer"
+							>→ ${indicator}
+						</a>`
+						)}
+					</div>
+				</div>
+			</a>`;
+
+			const gridSecton = document.createElement("SECTION");
+
+			gridSecton.innerHTML = `<section class="grid gap-4">
+				${gridLinks
+					.map(
+						({ name, links }) => `<navbar class="flex flex-wrap gap-4">
+							
+				<h2 class="text-lg pt-4 w-full">${name}</h2>
+				${links.map(source => createGridElement(source)).join("")}</navbar>`
+					)
+					.join("")}
+			</section>`;
+
+			document.body.appendChild(flexSection);
+			document.body.appendChild(gridSecton);
+		</script>
+	</body>
+</html>

@@ -1,0 +1,18 @@
+{
+	"name": "browser-startpage",
+	"author": "Ricardo Agra",
+	"repository": "https://github.com/RicardoAgra/browser-startpage",
+	"homepage": "https://ricardoagra.github.io/YouKnowOwl/",
+	"version": "1.0.0",
+	"description": "A project to customize your own browser start page with links, so you can stop seaching for the websites you want to visit, and Wallpapers that cycle for each day of the week.",
+	"main": "index.html",
+	"scripts": {
+		"start": "npm run watch",
+		"watch": "npx tailwindcss -w -i css/global.css -o dist.css",
+		"build": "npx tailwindcss -o dist.css --minify"
+	},
+	"license": "ISC",
+	"devDependencies": {
+		"tailwindcss": "^3.2.4"
+	}
+}
