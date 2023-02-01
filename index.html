@@ -230,10 +230,8 @@
 
 		<script>
 			/* Day-of-the-week (Name, Wallpaper) */
-			const weekDay = new Date().getDay();
-
 			const updateWeekDayUI = weekday => {
-				console.log("ui update");
+				const weekDay = new Date().getDay();
 
 				document.getElementById("weekday").innerText = weekDays[weekDay];
 				document.getElementById(
@@ -320,7 +318,7 @@
 				logo,
 				homepage,
 				indicators
-			}) => `<div class="group relative inline-flex items-center max-w-[400px] hover:shadow-[0_1px_2px_rgba(22,101,52,0.25)] hover:bg-green-600 hover:bg-opacity-50 p-2 w-full rounded">
+			}) => `<div class="group relative inline-flex items-center w-[400px] hover:shadow-[0_1px_2px_rgba(22,101,52,0.25)] hover:bg-green-600 hover:bg-opacity-50 p-2 w-full rounded">
 					<figure class="pr-4">
 						<img class="h-14 w-14 rounded" src="./logos/${logo}" />
 					</figure>
